@@ -18,6 +18,14 @@ def parse_params(uri_fragments, query_param_string)
   params
 end
 
+def display_values(passed_value)
+    puts "200 OK"
+    names = passed_value
+    names.each do |value|
+        puts "#{value.id}) #{value.last_name}, #{value.first_name} : #{value.age} years old"
+        end
+end
+
 def parse(raw_request)
   pieces = raw_request.split(' ')
   method = pieces[0]
@@ -92,12 +100,7 @@ loop do
               end
 
         else
-          puts "200 OK"
-          names = User.all.limit(PARAMS[:limit])
-          names.each do |value|
-              puts "#{value.id}) #{value.last_name}, #{value.first_name} : #{value.age} years old"
-              end
-
+          display_values(User.all.limit(PARAMS[:limit]))
         end
       end
 
@@ -108,4 +111,6 @@ loop do
       User.destroy(PARAMS[:id])
     end
   end
+
+
 end
