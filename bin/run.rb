@@ -57,10 +57,8 @@ loop do
     REQUEST = parse(raw_request)
     PARAMS  = REQUEST[:params]
 
-
+    puts PARAMS
     if PARAMS[:resource] == 'users' && PARAMS[:id] == nil && @test_params.length < 4 && PARAMS[:action] == nil
-      puts PARAMS
-      puts REQUEST
       puts "200 OK"
       names = User.all
       names.each do |value|
@@ -83,11 +81,5 @@ loop do
          end
     end
 
-    # Use the REQUEST and PARAMS constants to full the request and
-    # return an appropriate reponse
-
-    # YOUR CODE GOES BELOW HERE
-
-    # YOUR CODE GOES ABOVE HERE  ^
   end
 end
