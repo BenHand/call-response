@@ -91,10 +91,17 @@ loop do
       end
 
     elsif REQUEST[:method] == "DELETE"
-      puts "teststest"
       name = User.find(PARAMS[:id])
       puts "Deleting - #{name.id}) #{name.last_name}, #{name.first_name} from the database."
       User.destroy(PARAMS[:id])
+
+    # elsif REQUEST[:method] == "POST"
+    #   puts REQUEST
+    #   puts PARAMS
+      # name = User.create(first_name: (PARAMS[:first_name].to_s), last_name: (PARAMS[:last_name].to_s), age: (PARAMS[:age].to_i))
+      # display_values(name)
+
+      # POST http://localhost:3000/users 'first_name:"Justin",last_name:"Herrick",age:"99"' HTTP/1.1
     end
 
   end
