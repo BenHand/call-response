@@ -57,12 +57,11 @@ loop do
     REQUEST = parse(raw_request)
     PARAMS  = REQUEST[:params]
 
-    puts PARAMS
     if PARAMS[:resource] == 'users' && PARAMS[:id] == nil && @test_params.length < 4 && PARAMS[:action] == nil
       puts "200 OK"
       names = User.all
       names.each do |value|
-        puts "#{value.last_name}, #{value.first_name} : #{value.age} years old."
+        puts "#{value.id}) #{value.last_name}, #{value.first_name} : #{value.age} years old."
       end
 
     elsif PARAMS[:resource] == 'users' && PARAMS[:id] != nil
@@ -70,25 +69,29 @@ loop do
       if User.find_by_id(PARAMS[:id])
         puts "200 OK"
         names = User.find(PARAMS[:id])
-        puts "#{names.last_name}, #{names.first_name} : #{names.age} years old."
+        puts "#{value.id}) #{names.last_name}, #{names.first_name} : #{names.age} years old."
       else puts "Error 404: Not Found"
       end
    elsif PARAMS.include?(:first_name)
       puts "200 OK"
       names = User.where("first_name LIKE (?)", "#{PARAMS[:first_name]}%")
       names.each do |value|
-            puts "#{value.last_name}, #{value.first_name} : #{value.age} years old"
+            puts "#{value.id}) #{value.last_name}, #{value.first_name} : #{value.age} years old"
         end
     elsif PARAMS.include?(:limit)
       if PARAMS.include?(:offset)
-      puts "200 OK"
-      names = User.all.limit(PARAMS[:limit]).offset(PARAMS[:offset])
-      names.each do |value|
-            puts "#{value.last_name}, #{value.first_name} : #{value.age} years old"
+        puts "200 OK"
+        names = User.all.limit(PARAMS[:limit]).offset(PARAMS[:offset])
+        names.each do |value|
+            puts "#{value.id}) #{value.last_name}, #{value.first_name} : #{value.age} years old"
+            end
+      else
+        puts "200 OK"
+        names = User.all.limit(PARAMS[:limit])
+        names.each do |value|
+            puts "#{value.id}) #{value.last_name}, #{value.first_name} : #{value.age} years old"
             end
       end
-    # elsif PARAMS.include?(:offset)
-    # end
     end
   end
 end
