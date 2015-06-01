@@ -93,15 +93,11 @@ loop do
       elsif PARAMS.include?(:limit)
 
         if PARAMS.include?(:offset)
-          puts "200 OK"
-          names = User.all.limit(PARAMS[:limit]).offset(PARAMS[:offset])
-          names.each do |value|
-              puts "#{value.id}) #{value.last_name}, #{value.first_name} : #{value.age} years old"
-              end
-
+          display_values(User.all.limit(PARAMS[:limit]).offset(PARAMS[:offset]))
         else
           display_values(User.all.limit(PARAMS[:limit]))
         end
+
       end
 
     elsif REQUEST[:method] == "DELETE"
