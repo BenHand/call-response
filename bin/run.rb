@@ -73,13 +73,22 @@ loop do
         puts "#{names.last_name}, #{names.first_name} : #{names.age} years old."
       else puts "Error 404: Not Found"
       end
-   elsif @test_params.include?(:first_name)
+   elsif PARAMS.include?(:first_name)
       puts "200 OK"
-      all_users = User.where("first_name LIKE (?)", "#{PARAMS[:first_name]}%")
-      all_users.each do |value|
+      names = User.where("first_name LIKE (?)", "#{PARAMS[:first_name]}%")
+      names.each do |value|
             puts "#{value.last_name}, #{value.first_name} : #{value.age} years old"
-         end
+        end
+    elsif PARAMS.include?(:limit)
+      if PARAMS.include?(:offset)
+      puts "200 OK"
+      names = User.all.limit(PARAMS[:limit]).offset(PARAMS[:offset])
+      names.each do |value|
+            puts "#{value.last_name}, #{value.first_name} : #{value.age} years old"
+            end
+      end
+    # elsif PARAMS.include?(:offset)
+    # end
     end
-
   end
 end
