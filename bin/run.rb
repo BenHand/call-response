@@ -1,4 +1,5 @@
 require_relative '../db/setup'
+require_relative '../lib/all'
 # Remember to put the requires here for all the classes you write and want to use
 
 def parse_params(uri_fragments, query_param_string)
@@ -13,6 +14,7 @@ def parse_params(uri_fragments, query_param_string)
       params.store(k.to_sym, v)
     end
   end
+  @test_params = params
   params
 end
 
@@ -54,6 +56,33 @@ loop do
   else
     REQUEST = parse(raw_request)
     PARAMS  = REQUEST[:params]
+
+
+    if PARAMS[:resource] == 'users' && PARAMS[:id] == nil && @test_params.length < 4 && PARAMS[:action] == nil
+      puts PARAMS
+      puts REQUEST
+      puts "200 OK"
+      names = User.all
+      names.each do |value|
+        puts "#{value.last_name}, #{value.first_name} : #{value.age} years old."
+      end
+
+    elsif PARAMS[:resource] == 'users' && PARAMS[:id] != nil
+
+      if User.find_by_id(PARAMS[:id])
+        puts "200 OK"
+        names = User.find(PARAMS[:id])
+        puts "#{names.last_name}, #{names.first_name} : #{names.age} years old."
+      else puts "Error 404: Not Found"
+      end
+   elsif @test_params.include?(:first_name)
+      puts "200 OK"
+      all_users = User.where("first_name LIKE (?)", "#{PARAMS[:first_name]}%")
+      all_users.each do |value|
+            puts "#{value.last_name}, #{value.first_name} : #{value.age} years old"
+         end
+    end
+
     # Use the REQUEST and PARAMS constants to full the request and
     # return an appropriate reponse
 
