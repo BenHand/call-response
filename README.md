@@ -1,5 +1,4 @@
 # Features of the Call_Response program
-```
 This program takes a given URL, breaks it up into sections and returns appropriate data based on the fields provided.
 
 * GET http://localhost:3000/users HTTP/1.1 , will return a list of all the users stored in the db.
@@ -8,9 +7,8 @@ This program takes a given URL, breaks it up into sections and returns appropria
 * GET http://localhost:3000/users?first_name=s, will return users with names starting with 's'.
 * GET http://localhost:3000/users?limit=10&offset=10, will return 10 users starting with the 10th.
 * DELETE http://localhost:3000/users/1, will delete the user with the specified id #.
-```
 
-# Do the following to have your own call_response program
+## Do the following to have your own call_response program
 * Fork this repo
 * Clone this repo
 * `rake db:migrate` to run the migration and update the database
