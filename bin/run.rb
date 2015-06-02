@@ -1,6 +1,5 @@
 require_relative '../db/setup'
 require_relative '../lib/all'
-# Remember to put the requires here for all the classes you write and want to use
 
 def parse_params(uri_fragments, query_param_string)
   params = {}
@@ -65,6 +64,7 @@ loop do
     REQUEST = parse(raw_request)
     PARAMS  = REQUEST[:params]
 
+
     if REQUEST[:method] == 'GET'
 
       if PARAMS[:resource] == 'users' && PARAMS[:id] == nil && @test_params.length < 4 && PARAMS[:action] == nil
@@ -95,13 +95,6 @@ loop do
       puts "Deleting - #{name.id}) #{name.last_name}, #{name.first_name} from the database."
       User.destroy(PARAMS[:id])
 
-    # elsif REQUEST[:method] == "POST"
-    #   puts REQUEST
-    #   puts PARAMS
-      # name = User.create(first_name: (PARAMS[:first_name].to_s), last_name: (PARAMS[:last_name].to_s), age: (PARAMS[:age].to_i))
-      # display_values(name)
-
-      # POST http://localhost:3000/users 'first_name:"Justin",last_name:"Herrick",age:"99"' HTTP/1.1
     end
 
   end
