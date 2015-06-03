@@ -13,16 +13,15 @@ def parse_params(uri_fragments, query_param_string)
       params.store(k.to_sym, v)
     end
   end
-  @test_params = params
-  params
+  @params
 end
 
 def display_values(passed_value)
     puts "200 OK"
     names = passed_value
     names.each do |value|
-        puts "#{value.id}) #{value.last_name}, #{value.first_name} : #{value.age} years old"
-        end
+      puts "#{value.id}) #{value.last_name}, #{value.first_name} : #{value.age} years old"
+      end
 end
 
 def parse(raw_request)
@@ -67,19 +66,19 @@ loop do
 
     if REQUEST[:method] == 'GET'
 
-      if PARAMS[:resource] == 'users' && PARAMS[:id] == nil && @test_params.length < 4 && PARAMS[:action] == nil
+      if PARAMS[:resource] == 'users' && PARAMS[:id] == nil && @params.length < 4 && PARAMS[:action] == nil
           display_values(User.all)
 
       elsif PARAMS[:resource] == 'users' && PARAMS[:id] != nil
 
         if User.find_by_id(PARAMS[:id])
           display_values(User.find(PARAMS[:id]))
-
-        else puts "Error 404: Not Found"
+        else
+          puts "Error 404: Not Found"
         end
 
       elsif PARAMS.include?(:first_name)
-          display_values(User.where("first_name LIKE (?)", "#{PARAMS[:first_name]}%"))
+        display_values(User.where("first_name LIKE (?)", "#{PARAMS[:first_name]}%"))
       elsif PARAMS.include?(:limit)
 
         if PARAMS.include?(:offset)
